@@ -1,0 +1,12 @@
+
+
+export default class {
+    <% if(init) { -%>
+    constructor() {
+        <%- init %>
+    }
+    <% } -%>
+    <% for(let methodName in methods){ -%>
+        <%= methodName %> = <%- methods[methodName] %>
+    <% } -%>
+}

@@ -1,0 +1,33 @@
+import React from 'react';
+<% for(let key in lessPath) { -%>
+import '<%= lessPath[key] %>';
+<% } -%>
+import {render, connect} from 'ader';
+<% for(let key in actions) { -%>
+import <%= actions[key] %> from 'actions/<%= actions[key] %>';
+<% } -%>
+<% for(let key in children) { -%>
+import <%= key %> from '<%= children[key] %>';
+<% } %>
+
+const compiler = render({
+    actions: {
+    <% for(let key in actions) { -%>
+    <%= actions[key] %>: <%= actions[key] %>
+    <% } -%>
+    }
+});
+
+<% if(model){ -%>
+export default connect(compiler(({props, state, action}) => {
+    return (
+/*@@*/
+    );
+}));
+<% } else { -%>
+export default compiler(({props, state, action}) => {
+    return (
+/*@@*/
+    );
+});
+<% } -%>

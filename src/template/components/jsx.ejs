@@ -1,0 +1,15 @@
+<<%=name %>
+<% for(let key in props) { -%>
+<%= key %>=<%- props[key] %>
+<% } -%>
+>
+<% if(children){ -%>
+    <% for(let key in children){ -%>
+        <% if(typeof children[key] === 'string'){ -%>
+        <%- children[key] %>
+        <% } else { -%>
+        <%- renderJsx({name: children[key].name, props: children[key].props}) %>
+        <% } -%>
+    <% } -%>
+<% } -%>
+</<%= name %>>

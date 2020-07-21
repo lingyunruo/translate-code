@@ -1,0 +1,10 @@
+import React from 'react';
+import ReactDom from 'react-dom';
+import {createStore} from 'ader';
+<% for(let key in models){ -%>
+import <%= models[key] %> from 'models/<%= models[key] %>';
+<% } -%>
+import HomePage from 'components/<%= container %>';
+const store = createStore([<%= models %>]);
+
+ReactDom.render(<HomePage store={store}/>, document.getElementById('<%= domId %>'));

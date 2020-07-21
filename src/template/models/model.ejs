@@ -1,0 +1,11 @@
+export default class {
+    name='<%= name %>'
+    data={
+    <% for(var key in data) { -%>
+        <%= key %>: <%- data[key] %>,
+    <% } -%>
+    }
+    <% for(var key in methods) { -%>
+        <%= key %> = <%- methods[key] %>
+    <% } -%>
+}

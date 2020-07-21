@@ -1,0 +1,10 @@
+<% for(var key in data) { -%>
+.<%- key -%> {
+<% for(var fieldKey in data[key]) { -%>
+<% if(fieldKey === 'children') { -%>
+    <%- compiler({data: data[key]['children'], compiler: compiler}) -%>
+<% } else { -%>
+    <%- fieldKey %>: <%- data[key][fieldKey] %>;
+<% } -%>
+<% } -%>}
+<% } -%>
