@@ -1,0 +1,9 @@
+{
+	"modelList": [{
+		"name": "home",
+		"description": "首页数据"
+	}],
+	"home": {
+		"data": {}
+	}
+}

@@ -15,10 +15,8 @@ export default compiler(({
     action
 }) => {
     return (
-        return (
-<span>
+        <span>
     我是logo
 </span>
-)
     );
 });

@@ -16,10 +16,8 @@ export default compiler(({
     action
 }) => {
     return (
-        return (
-<div className="header-bar">
+        <div className="header-bar">
     {props.children}
 </div>
-)
     );
 });

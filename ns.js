@@ -1,54 +1,60 @@
-/**
- * @param {string} s
- * @return {string}
- */
-var longestPalindrome = function(s) {
-    console.time('计算耗时：')
-    let arr = s.split('');
-    let res = [arr[0]];
+const https = require('https');
+const querystring = require('querystring');
+const cheerio = require('cheerio');
+const fse = require('fs-extra');
+const path = require('path');
 
-    if(arr.length === 1) {
-        return s;
-    }
+const data = {};
+let i = 1;
+const tmp = (num) => {
+    return `1902050${num}`
+}
+
+function getAccount(userName) {
+    const postData = querystring.stringify({
+        username: userName,
+        myselect: 2
+    });
     
-    while(arr.length > 0) {
-        let el = arr.shift();
-        let indexList = [];
-        arr.forEach((item, index) => {
-            if(item === el) {
-                indexList.push(index);
-            }
-        });
-        if(indexList.length === arr.length && arr.length > 1) {
-            if(res.length < indexList.length + 1) {
-                res = arr;
-                res.unshift(el);
-            }
-            break;
+    
+    const req = https.request({
+        hostname: 'i.lnut.edu.cn',
+        port: 443,
+        path: '/appsystem/ihome/service/mmrzwt/yuliuyouxiang.ws',
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Content-Length': Buffer.byteLength(postData)
         }
+    }, (res) => {
+        res.setEncoding('utf8');
+        res.on('data', (chunk) => {
+            const $ = cheerio.load(chunk);
+    
+            let name = $('#account').val();
+            let value = $('#ylyouxiang').val();
+    
+            if(value) {
+                data[name] = value;
+            }
+        })
 
-        indexList.forEach((item) => {
-            let c = [];
-            let flag = true;
-            for(let i=0; i<=Math.floor((item)/2); i++) {
-                if(item !== 0 && arr[i] !== arr[item - 1 - i]) {
-                    c = [];
-                    flag = false;
-                    break;
-                }
+        res.on('end', () => {
+            i++;
+            if(i < 80) {
+                let num = i < 10 ? '0' + i : i;
+                getAccount(tmp(num));
             }
-            if(flag) {
-                c = arr.slice(0, item + 1);
-                c.unshift(el);
-            }
-            if(c.length > res.length) {
-                res = c;
+            else {
+                fse.outputFileSync(path.join(__dirname, './data.json'), JSON.stringify(data, null, '\t'), {
+                    encoding: 'utf-8'
+                });
             }
         });
-    }
-    console.timeEnd('计算耗时：');
-    return res.join('');
-};
+    });
 
+    req.write(postData);
+    req.end();
+}
 
-console.log(longestPalindrome('ccccggggg'));
+getAccount(tmp(01));

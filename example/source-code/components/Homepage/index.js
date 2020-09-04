@@ -20,28 +20,18 @@ export default connect(compiler(({
     state,
     action
 }) => {
-
     return (
-<div className="page-wrapper">
-    return (
+        <div className="page-wrapper">
     <Header nameAttr="lll">
-        return (
         <Logo onClick={action.alert}>
-            return (
             <img url="http://jjj">
             </img>
-            )
         </Logo>
-        )
         {props.children}
     </Header>
-    )
-    return (
     <span>
         我是内容
     </span>
-    )
 </div>
-)
-
+    );
 }));

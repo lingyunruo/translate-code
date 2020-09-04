@@ -4,13 +4,13 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
 	entry: {
-		"main": path.join(__dirname, "./example/source-code/main.js")
+		"index": path.join(__dirname, "./web/front/main.js")
 	},
 	output: {
 		path: path.join(__dirname, './example/build'),
 		filename: '[name].js'
 	},
-	watch: false,
+	watch: true,
 	watchOptions: {
 		aggregateTimeout: 1000,
 		poll: 1000
@@ -19,14 +19,15 @@ module.exports = {
 	devServer: {
 		contentBase: path.join(__dirname, './example/build'),
 		compress: false,
-		port: 9000
+		port: 9000,
+		writeToDisk: true
 	},
 	resolve: {
 		alias: {
-			actions: path.join(__dirname, './example/source-code/actions/'),
-			models: path.join(__dirname, './example/source-code/models/'),
-			components: path.join(__dirname, './example/source-code/components/'),
-			common: path.join(__dirname, './example/source-code/common/')
+			actions: path.join(__dirname, './web/front/actions/'),
+			models: path.join(__dirname, './web/front/models/'),
+			components: path.join(__dirname, './web/front/components/'),
+			common: path.join(__dirname, './web/front/common/')
 		}
 	},
 	devtool: 'cheap-module-source-map',
